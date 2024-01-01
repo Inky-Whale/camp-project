@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   TableRow,
   TableHeaderCell,
@@ -12,37 +12,35 @@ import {
   Menu,
   Table,
 } from "semantic-ui-react";
+import ProductService from "../services/productService";
 
 export default function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    let productService = new ProductService();
+    productService.getProducts().then((result) => setProducts(result.data));
+  });
+
   return (
     <div>
       <Table celled>
         <TableHeader>
           <TableRow>
-            <TableHeaderCell>Header</TableHeaderCell>
-            <TableHeaderCell>Header</TableHeaderCell>
-            <TableHeaderCell>Header</TableHeaderCell>
+            <TableHeaderCell>Product Name</TableHeaderCell>
+            <TableHeaderCell>Unit Price</TableHeaderCell>
+            <TableHeaderCell>In Stock</TableHeaderCell>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          <TableRow>
-            <TableCell>
-              <Label ribbon>First</Label>
-            </TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-            <TableCell>Cell</TableCell>
-          </TableRow>
+          {products.map((product) => (
+            <TableRow key={product.id}>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.price}</TableCell>
+              <TableCell>{product.stock}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
 
         <TableFooter>
