@@ -26,7 +26,7 @@ export default function Navi() {
           <MenuMenu position="right">
             <CartSummary />
             {isAuthenticated ? (
-              <LoggedIn logOut={handleLogOut} bisey="1" />
+              <LoggedIn logOut={handleLogOut} />
             ) : (
               <LoggedOut logIn={handleLogIn} />
             )}
