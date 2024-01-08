@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import {
   CardMeta,
   CardHeader,
@@ -10,29 +11,32 @@ import {
   Icon,
   Image,
 } from "semantic-ui-react";
+import ProductService from "../services/productService";
 
 export default function ProductDetail() {
+  let { id } = useParams();
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    let productService = new ProductService();
+    productService
+      .getProductsById(id)
+      .then((result) => setProduct(result.data));
+  }, []);
+
   return (
-    <Card>
+    <Card fluid>
       <CardContent>
-        <Image
-          floated="right"
-          size="mini"
-          src="/images/avatar/large/jenny.jpg"
-        />
-        <CardHeader>{}</CardHeader>
-        <CardMeta>New User</CardMeta>
-        <CardDescription>
-          Jenny requested permission to view your contact details
-        </CardDescription>
+        <CardHeader>{product.name}</CardHeader>
+        <Image size="medium" src={product.imageUrl} />
+
+        <CardDescription>${product.price}</CardDescription>
       </CardContent>
       <CardContent extra>
         <div className="ui two buttons">
           <Button basic color="green">
-            Approve
-          </Button>
-          <Button basic color="red">
-            Decline
+            Add to cart
           </Button>
         </div>
       </CardContent>

@@ -11,7 +11,7 @@ export default function Navi() {
 
   const handleLogOut = () => {
     setIsAuthenticated(false);
-    navigate("/");
+    navigate("/home");
   };
 
   const handleLogIn = () => {
